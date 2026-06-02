@@ -112,8 +112,20 @@ export const extractComponentNamesFromOperations = (operations: number[][]): Map
                 case TreeOperation.SetSubtreeMode:
                     reader.skip(2); // fiberID, mode
                     break;
+                case TreeOperation.SuspenseAdd: {
+                    reader.skip(4); // id, parentID, nameStringID, isSuspended
+                    const numRects = reader.next();
+                    if (numRects > 0) {
+                        reader.skip(numRects * 4); // x, y, width, height per rect (×1000 encoded)
+                    }
+                    break;
+                }
+                case TreeOperation.SuspenseRemove: {
+                    const suspenseCount = reader.next();
+                    reader.skip(suspenseCount);
+                    break;
+                }
                 default:
-                    reader.skip(2); // best-effort skip for unknown ops
                     break;
             }
         }

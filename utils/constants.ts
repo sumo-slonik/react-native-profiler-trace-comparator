@@ -9,6 +9,9 @@ export const enum TreeOperation {
     UpdateTreeBaseDuration = 4,
     UpdateErrorsOrWarnings = 5,
     SetSubtreeMode = 6,
+    // Suspense tree operations (React DevTools main branch)
+    SuspenseAdd = 8,    // [id, parentID, nameStringID, isSuspended, numRects, ...4*numRects]
+    SuspenseRemove = 9, // [count, ...count_ids]
 }
 
 export const HEADER_SIZE = 3; // rendererID + rootFiberID + stringTableSize
